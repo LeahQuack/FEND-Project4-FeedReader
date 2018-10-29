@@ -47,7 +47,7 @@ $(function() {
            for(let feed of allFeeds) {
              expect(feed.name).toBeDefined();
              expect(feed.name.length).not.toBe(0);
-           }
+           });
          });
     });
 
@@ -93,7 +93,7 @@ $(function() {
 
       it('completes work', function() {
         const feed = document.querySelector('.feed');
-        expect(feed.children.length > 0).toBe(true);
+        expect(feed.children.length > 1).toBe(true);
       });
     });
 
@@ -106,16 +106,22 @@ $(function() {
        * by the loadFeed function that the content actually changes.
        */
        beforeEach(function(done) {
-         loadFeed(0);
-         Array.from(feed.children).forEach(function(entry) {
-           firstFeed.push(entry.innerText);
-         });
-         loadFeed(1,done);
-       });
+         let feedAfterFirstLoad;
+         let feedAfterSecondLoad;
+           
+           beforeEach(function(done) {
+               loadFeed(0, function() {
+                   initialFeedHTML = $('.feed').html();
+               loadFeed(1, function() {
+                   done();
+               });
+               });
+           });
+           
        it('content changes', function() {
          Array.from(feed.children).forEach(function(entry,index) {
            console.log(entry.innerText, firstFeed[index], entry.innerText === firstFeed[index]);
-           expect(entry.innerText == firstFeed[index]).toBe(false);
+           expect(feedAfterFirstLoad).not.toEqual(feedAfterSecondLoad);
          });
        });
     });
