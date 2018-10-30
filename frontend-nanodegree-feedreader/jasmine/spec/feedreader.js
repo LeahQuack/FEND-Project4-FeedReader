@@ -107,14 +107,13 @@ $(function() {
            
            beforeEach(function(done) {
                loadFeed(0, function() {
-                   initialFeedHTML = $('.feed').children().text();
-                   done();
+                   initialFeedHTML = $('.feed').html();
+                   loadFeeed(1, done);
                });
            });
-       it('second feed', function(done) {
+       it('second feed different', function() {
          loadFeed(1, function() {
-             secondFeedHTML = $('.feed').children().text();
-             expect(secondFeedHTML).not.toEqual(initialFeedHTML);
+             expect($('.feed')html()).not.toEqual(initialFeedHTML);
              done();
          });
        });
