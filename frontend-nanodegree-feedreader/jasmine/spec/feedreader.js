@@ -114,7 +114,7 @@ $(function() {
        it('second feed', function(done) {
          loadFeed(1, function() {
              secondFeedHTML = $('.feed').children().text();
-             expect(initialFeedHTML).not.toEqual(secondFeedHTML);
+             expect(secondFeedHTML).not.toEqual(initialFeedHTML);
              done();
          });
        });
