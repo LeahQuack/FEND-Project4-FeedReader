@@ -30,13 +30,12 @@ $(function() {
          * and that the URL is not empty.
          */
 
-         it('url defined', function(){
-           for(let feed of allFeeds) {
+         it('url defined', function() {
+           allFeeds.forEach(function(feed) {
              expect(feed.url).toBeDefined();
              expect(feed.url.length).not.toBe(0);
-           }
+           });
          });
-
 
         /* Test loops through each feed
          * in the allFeeds object and ensures it has a name defined
@@ -44,13 +43,12 @@ $(function() {
          */
 
          it('name defined', function() {
-           for(let feed of allFeeds) {
+           allFeeds.forEach(function(feed) {
              expect(feed.name).toBeDefined();
              expect(feed.name.length).not.toBe(0);
            });
-         });
+        });
     });
-
 
     /* New test suite */
     describe('The menu', function() {
@@ -59,8 +57,7 @@ $(function() {
        * hidden by default.
        */
        it('is hidden', function() {
-         const body = document.querySelector('body');
-         expect (body.classList.contains('menu-hidden')).toBe(true);
+         expect($('body').hasClass('menu-hidden')).toBe(true);
        });
 
        /* Test ensures the menu changes
@@ -92,8 +89,7 @@ $(function() {
       });
 
       it('completes work', function() {
-        const feed = document.querySelector('.feed');
-        expect(feed.children.length > 1).toBe(true);
+        expect($('.feed.entry').length).toBeGreaterThan(0);
       });
     });
 
@@ -102,21 +98,16 @@ $(function() {
       /* Test ensures when a new feed is loaded
        * by the loadFeed function that the content actually changes.
        */
-         let initialFeedHTML;
-         let secondFeedHTML;
+         let initialFeed;
            
            beforeEach(function(done) {
                loadFeed(0, function() {
-                   initialFeedHTML = $('.feed').html();
-                   loadFeeed(1, done);
+                   initialFeed = $('.feed').html();
+                   loadFeed(1, done);
                });
            });
        it('second feed different', function() {
-         loadFeed(1, function() {
-             expect($('.feed')html()).not.toEqual(initialFeedHTML);
-             done();
-         });
+             expect($('.feed')html()).not.toBe(initialFeed);
        });
     });
-
 }());
